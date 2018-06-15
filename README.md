@@ -1,8 +1,9 @@
 # Youtube video downloader
 ### A Youtube video dowloader in NodeJS.
 #### With the ability to extract the audio using FFmpeg
-
 ---
+[Discord Server](https://discord.gg/9C7aXt8)
+
 **Basic Usage**:
 The app defaults to converting it to an audio file. To download just a video add the `-v` flag.
 
