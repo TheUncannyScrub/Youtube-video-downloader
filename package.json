@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "array.prototype.findindex": "^2.0.2",
     "eslint": "^4.19.1",
     "ffmpeg": "0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
     "minimist": "^1.2.0",
     "ytdl-core": "^0.20.4"
   }
