@@ -43,7 +43,6 @@ This app was a 20 minute bodge because all the other version looked unsafe or do
 
 #### Known Issues:
 - [] FFmpeg must be installed at `C:/ffmpeg/bin/ffmpeg.exe`
-- [] FFmpeg is still required when not using ffmpeg to convert the files
 
 
 #### Working on:
@@ -51,3 +50,6 @@ This app was a 20 minute bodge because all the other version looked unsafe or do
 - [] Have an easier way to use FFmpeg when its installed
 - [] Add A function to the app where it loads url's from a youtube playlist
 
+
+#### Fixed*:
+- FFmpeg is still required when not using ffmpeg to convert the files
