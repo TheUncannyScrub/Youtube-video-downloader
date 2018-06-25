@@ -41,6 +41,11 @@ jvipPYFebWc,4MCjU-Du3eI,RrutzRWXkKs
 The JavaScript file *app.js* checks if two folders exist if not it creates them when you first run the file: *./music* and *./video* . The music folder stores the audio file and the Video folder stores the mp4 file. 
 This app was a 20 minute bodge because all the other version looked unsafe or dodgey. Feel free to use this even though its buggy and dont be afraid to mess on with it. Im working to make it a more inclusive app with the ability to download entire playlists at a time.
 
+
+#### Setup:
+To be created
+
+
 #### Known Issues:
 - [] FFmpeg must be installed at `C:/ffmpeg/bin/ffmpeg.exe`
 
