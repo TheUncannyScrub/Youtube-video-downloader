@@ -62,7 +62,7 @@ if(argv['a'] && !argv['l']){//Audio only
         let stream = ytdl(URL);
         var proc = new ffmpeg({source: stream});
     
-        proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
+        //proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
         proc.withAudioCodec('libmp3lame')
             .toFormat('mp3')
             .output(`./${audioDir}/${escTitle}.mp3`)
@@ -120,8 +120,6 @@ if(argv['a'] && argv['l']){//Audio List
                 let stream = ytdl(URL); //Sets Stream source as 
                 
                 var proc = new ffmpeg({source: stream});
-                
-                //currently have ffmpeg stored directly on the server, and ffmpegLocation is the path to its location... perhaps not ideal, but what I'm currently settled on. And then sending output directly to response.
                 //proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
                 proc.withAudioCodec('libmp3lame')
                     .toFormat('mp3')

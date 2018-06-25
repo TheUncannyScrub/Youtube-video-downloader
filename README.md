@@ -43,8 +43,21 @@ This app was a 20 minute bodge because all the other version looked unsafe or do
 
 
 #### Setup:
+Upon installing / download to zip. in the Directory that the app.js / package.json file is in run:
 
+```
+npm install
+```
 
+then you are sorted, there might be some errors please open an issue if you get one.
+This app is not generally user friendly and you will need some NodeJS experience.
+This App requires you to have FFMPEG.exe installed and also to be in your PATH Variable. If ffmpeg is installed but not in the path variable you can uncomment two lines of code to fix this:
+
+```
+proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
+```
+
+All you need to do is uncomment that line of code in two places (ln 65 & ln 123) and then change the File path to where your FFMPEG binares were installed to.
 
 
 #### Known Issues:
