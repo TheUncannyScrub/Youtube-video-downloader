@@ -8,27 +8,24 @@ let ffmpeg = require('fluent-ffmpeg');
  *  $ node index.js list.txt -l -a = Download to audio files from the list
  * 
  *  
- *  -a = Audio download
- *  -v = Video download
- *  -d = Debug mode (Adds extra console output to view what the Code is doing)
- *  -l = List Download (If you have a list of URLs to download)
- *  -f = Download Audio without FFMPEG (Only available in conjunction with -a and will create massive mp3 files)
+ * -a = Audio download
+ * -v = Video download
+ * -d = Debug mode (Adds extra console output to view what the Code is doing)
+ * -l = List Download (If you have a list of URLs to download)
+ * -f = Download Audio without FFMPEG (Only available in conjunction with -a and will create massive mp3 files)
+ * -p = Download from Playlist (https://www.youtube.com/playlist?list=XXXXXXX)
+ *  
+ *  
  * 
- * 
- * 
- *  Combined Flag output examples:
- *  -a & -l = Take the list and download audio
- *  -v & -l = Take the list and download video
- *  -a = Audio only from Argument
- *  -v = Video only from Argument
- * 
- *  Planned:
- *   AutoGet and Set File's metadata
- *   Auto Grab URL's from Playlist - add flag to auto download
+ * Combined Flag output examples:
+ * -a & -l = Take the list and download audio
+ * -v & -l = Take the list and download video
+ * -a & -p = Take the playlist and download audio
+ * -v & -p = Take the playlist and download video
+ * -a = Audio only from Argument
+ * -v = Video only from Argument
  *   
  */
-
-
 let videoDir = './videos'  //Variable with the folder name to store videos
 if(!fs.existsSync(videoDir)){ //Check if the Video folder already exists
     fs.mkdirSync(videoDir)}; // If not make it
@@ -37,14 +34,12 @@ let audioDir = './audio' //Variable with the folder name to store audio
 if(!fs.existsSync(audioDir)){ //Check if the Audio folder already exists
     fs.mkdirSync(audioDir)} //If not make it
 
-
 if(!argv['a'] && !argv['v']){ //If no Format flag is found execute
     console.log('Please include a Format flag! (-a for audio and -v for video)') // Output if the user forgot to add a format flag
 }
 
 let vidTitle = "";
-if(argv['a'] && !argv['l'] && !argv['p']){//Audio only
-    
+if(argv['a'] && !argv['l'] && !argv['p']){//Audio only 
     let URL = "https://www.youtube.com/watch?v=" + argv['_']; //The Input from Command line becomes the URL
     ytdl.getInfo(URL ,function(err, info) {
         vidTitle = info.title;
@@ -72,12 +67,9 @@ if(argv['a'] && !argv['l'] && !argv['p']){//Audio only
             console.log(`Downloaded - ${vidTitle}`);
         });
        }
-
         if (err) throw err;
     });
 }
-
-
 if(argv['v'] && !argv['l'] && !argv['p']){//Video only
     let URL = "https://www.youtube.com/watch?v=" + argv['_']; //The Input from Command line becomes the URL
     ytdl.getInfo(URL ,function(err, info) {
@@ -88,14 +80,10 @@ if(argv['v'] && !argv['l'] && !argv['p']){//Video only
         })
         if (err) throw err;
     });
-
 }
-
-
 if(argv['a'] && argv['l'] && !argv['p']){//Audio List
     let text;
     let list;
-
     let file = `./${argv['_']}` //Get the file name from the Process arguments 
     if(!fs.existsSync(file)){ // If it does not exists - execute below
         console.log('No list file found') // Output if no file is found
@@ -112,7 +100,6 @@ if(argv['a'] && argv['l'] && !argv['p']){//Audio List
                 console.log(`(${i+1}/${list.length}) Loaded | ${element}`) //Output for loading files
             } 
             let URL = "https://www.youtube.com/watch?v=" + element;
-    
             ytdl.getInfo(URL ,function(err, info) {
                 let vidTitle;
                 
@@ -136,12 +123,9 @@ if(argv['a'] && argv['l'] && !argv['p']){//Audio List
         });
     }
 }
-
-
 if(argv['v'] && argv['l'] && !argv['p']){//Video List
     let text;
     let list;
-
     let file = `./${argv['_']}` //Get the file name from the Process arguments 
     if(!fs.existsSync(file)){ // If it does not exists - execute below
         console.log('No list file found') // Output if no file is found
@@ -158,7 +142,6 @@ if(argv['v'] && argv['l'] && !argv['p']){//Video List
                 console.log(`(${i+1}/${list.length}) Loaded | ${element}`) //Output for loading files
             } 
             let URL = "https://www.youtube.com/watch?v=" + element;
-    
             ytdl.getInfo(URL ,function(err, info) {
                 let vidTitle;
                 vidTitle = info.title;
@@ -173,7 +156,6 @@ if(argv['v'] && argv['l'] && !argv['p']){//Video List
         });
     }  
 }
-
 if(argv['v'] && argv['p']){ //Video Playlist
 let URL = "https://www.youtube.com/playlist?list=" + argv['_']; //https://www.youtube.com/playlist?list=argv['_']
 ytlist(URL, 'url').then(res => {
@@ -205,7 +187,6 @@ ytlist(URL, 'url').then(res => {
 }
 if(argv['a'] && argv['p']){ //Audio Playlist
 let URL = "https://www.youtube.com/playlist?list=" + argv['_']; //https://www.youtube.com/playlist?list=argv['_']
-
 ytlist(URL, 'url').then(res => {
     let urlArray = res.data.playlist
     if(argv['d']){
@@ -239,8 +220,5 @@ ytlist(URL, 'url').then(res => {
         });
         i++ 
     });
-
-
-    
 });
 }
