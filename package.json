@@ -13,6 +13,7 @@
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "minimist": "^1.2.0",
+    "youtube-playlist": "^1.0.0",
     "ytdl-core": "^0.20.4"
   }
 }

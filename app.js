@@ -1,6 +1,7 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 const argv = require('minimist')(process.argv.slice(2))
+const ytlist = require('youtube-playlist')
 let ffmpeg = require('fluent-ffmpeg');
 /**
  *  Example input
@@ -42,7 +43,7 @@ if(!argv['a'] && !argv['v']){ //If no Format flag is found execute
 }
 
 let vidTitle = "";
-if(argv['a'] && !argv['l']){//Audio only
+if(argv['a'] && !argv['l'] && !argv['p']){//Audio only
     
     let URL = "https://www.youtube.com/watch?v=" + argv['_']; //The Input from Command line becomes the URL
     ytdl.getInfo(URL ,function(err, info) {
@@ -77,7 +78,7 @@ if(argv['a'] && !argv['l']){//Audio only
 }
 
 
-if(argv['v'] && !argv['l']){//Video only
+if(argv['v'] && !argv['l'] && !argv['p']){//Video only
     let URL = "https://www.youtube.com/watch?v=" + argv['_']; //The Input from Command line becomes the URL
     ytdl.getInfo(URL ,function(err, info) {
         let vidTitle = info.title;
@@ -91,7 +92,7 @@ if(argv['v'] && !argv['l']){//Video only
 }
 
 
-if(argv['a'] && argv['l']){//Audio List
+if(argv['a'] && argv['l'] && !argv['p']){//Audio List
     let text;
     let list;
 
@@ -137,7 +138,7 @@ if(argv['a'] && argv['l']){//Audio List
 }
 
 
-if(argv['v'] && argv['l']){//Video List
+if(argv['v'] && argv['l'] && !argv['p']){//Video List
     let text;
     let list;
 
@@ -171,4 +172,75 @@ if(argv['v'] && argv['l']){//Video List
             i++
         });
     }  
+}
+
+if(argv['v'] && argv['p']){ //Video Playlist
+let URL = "https://www.youtube.com/playlist?list=" + argv['_']; //https://www.youtube.com/playlist?list=argv['_']
+ytlist(URL, 'url').then(res => {
+    let urlArray = res.data.playlist
+    if(argv['d']){
+        console.log(`${urlArray.length} Videos Loaded from playlist`)
+    }
+    let i = 0;
+    let x = 0;
+    urlArray.forEach(function(element){
+            if(argv['d']){
+                console.log(`(${i+1}/${urlArray.length}) Loaded | ${element}`) //Output for loading files
+            }
+            ytdl.getInfo(element ,function(err, info) {
+                let vidTitle;
+                vidTitle = info.title;
+                let escTitle = vidTitle.replace(/([/,\(, ,\),\.\],\[,\-,\|,\:])+/g,"") //Escapes Characters in Video title
+                ytdl(element).pipe(fs.createWriteStream(`./${videoDir}/${escTitle}.mp4`)).on('finish', function(){
+                    console.log(`(${x+1}/${urlArray.length}) Downloaded | ${vidTitle}`)
+                    x++
+                })
+                if (err) throw err;
+            });
+            i++  
+    });
+    
+});
+
+}
+if(argv['a'] && argv['p']){ //Audio Playlist
+let URL = "https://www.youtube.com/playlist?list=" + argv['_']; //https://www.youtube.com/playlist?list=argv['_']
+
+ytlist(URL, 'url').then(res => {
+    let urlArray = res.data.playlist
+    if(argv['d']){
+        console.log(`${urlArray.length} Videos Loaded from playlist`)
+    }
+    let i = 0;
+    let x = 0;
+    urlArray.forEach(function(element){ //Function checking all are visible before executing
+        if(argv['d']){//Debugger Flag
+            console.log(`(${i+1}/${urlArray.length}) Loaded | ${element}`) //Output for loading files
+        }
+
+        ytdl.getInfo(element ,function(err, info) {
+            let vidTitle;
+            
+            vidTitle = info.title;
+            let escTitle = vidTitle.replace(/([/,\(, ,\),\.\],\[,\-,\|,\:])+/g,"") //Escapes Characters in Video title
+            let stream = ytdl(element); //Sets Stream source as 
+            
+            var proc = new ffmpeg({source: stream});
+            //proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
+            proc.withAudioCodec('libmp3lame')
+                .toFormat('mp3')
+                .output(`./${audioDir}/${escTitle}.mp3`)
+                .run();
+            proc.on('end', function() {
+                console.log(`(${x+1}/${urlArray.length}) Downloaded | ${vidTitle}`);
+                x++
+            });
+            if (err) throw err;
+        });
+        i++ 
+    });
+
+
+    
+});
 }

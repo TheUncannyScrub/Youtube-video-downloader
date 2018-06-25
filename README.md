@@ -57,18 +57,18 @@ This App requires you to have FFMPEG.exe installed and also to be in your PATH V
 proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
 ```
 
-All you need to do is uncomment that line of code in two places (ln 65 & ln 123) and then change the File path to where your FFMPEG binares were installed to.
+All you need to do is uncomment that line of code in two places (ln 65 & ln 123 & ln 229) and then change the File path to where your FFMPEG binares were installed to.
 
 
 #### Known Issues:
-- [] FFmpeg must be installed at `C:/ffmpeg/bin/ffmpeg.exe`
 
 
 #### Working on:
-- [] FFmpeg to not be required when not using it
-- [] Have an easier way to use FFmpeg when its installed
-- [] Add A function to the app where it loads url's from a youtube playlist
+- FFmpeg to not be required when not using it
+- Add A function to the app where it loads url's from a youtube playlist
 
 
 #### Fixed*:
 - FFmpeg is still required when not using ffmpeg to convert the files
+- FFmpeg must be installed at `C:/ffmpeg/bin/ffmpeg.exe`
+- Have an easier way to use FFmpeg when its installed
