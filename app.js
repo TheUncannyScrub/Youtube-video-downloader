@@ -1,8 +1,7 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-const ffmpeg = require('fluent-ffmpeg');
 const argv = require('minimist')(process.argv.slice(2))
-
+let ffmpeg = require('fluent-ffmpeg');
 /**
  *  Example input
  *  $ node index.js list.txt -l -a = Download to audio files from the list
@@ -22,7 +21,10 @@ const argv = require('minimist')(process.argv.slice(2))
  *  -a = Audio only from Argument
  *  -v = Video only from Argument
  * 
- * 
+ *  Planned:
+ *   AutoGet and Set File's metadata
+ *   Auto Grab URL's from Playlist - add flag to auto download
+ *   
  */
 
 
@@ -34,26 +36,24 @@ let audioDir = './audio' //Variable with the folder name to store audio
 if(!fs.existsSync(audioDir)){ //Check if the Audio folder already exists
     fs.mkdirSync(audioDir)} //If not make it
 
-let tempDir = './temp' //Variable with the folder name to store temp files
-if(!fs.existsSync(tempDir)){ //Check if the Temp folder already exists
-    fs.mkdirSync(tempDir)} //if not make it
-
 
 if(!argv['a'] && !argv['v']){ //If no Format flag is found execute
     console.log('Please include a Format flag! (-a for audio and -v for video)') // Output if the user forgot to add a format flag
 }
 
-
+let vidTitle = "";
 if(argv['a'] && !argv['l']){//Audio only
+    
     let URL = "https://www.youtube.com/watch?v=" + argv['_']; //The Input from Command line becomes the URL
     ytdl.getInfo(URL ,function(err, info) {
-        let vidTitle = info.title;
+        vidTitle = info.title;
         let escTitle = vidTitle.replace(/([/,(, ,)])+/g,"")
        if(argv['f']){
+           ffmpeg = require("./")
         ytdl.getInfo(URL ,function(err, info) {
             let vidTitle = info.title;
             let escTitle = vidTitle.replace(/([/,(, ,)])+/g,"")
-            ytdl(URL,{filter:'audioonly'}).pipe(fs.createWriteStream(`./${audioDir}/${(escTitle)}.mp3`)).on('finish', function() {
+            ytdl(URL,{filter:'audioonly'}).pipe(fs.createWriteStream(`./${audioDir}/${(escTitle)}.mp3`)).on('end', function() {
                 console.log(`Downloaded - ${vidTitle}`)
             })
             if (err) throw err;
@@ -122,7 +122,7 @@ if(argv['a'] && argv['l']){//Audio List
                 var proc = new ffmpeg({source: stream});
                 
                 //currently have ffmpeg stored directly on the server, and ffmpegLocation is the path to its location... perhaps not ideal, but what I'm currently settled on. And then sending output directly to response.
-                proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
+                //proc.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
                 proc.withAudioCodec('libmp3lame')
                     .toFormat('mp3')
                     .output(`./${audioDir}/${escTitle}.mp3`)
