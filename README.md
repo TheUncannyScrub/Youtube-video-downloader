@@ -7,7 +7,7 @@
 **Basic Usage**:
 The app defaults to converting it to an audio file. To download just a video add the `-v` flag.
 
-The app does not take a standard URL as a download link. Go to the search bar in your browser and copy the part of the URL **AFTER** :`https://www.youtube.com/watch?v=` This also applies for making a list file
+The app does not take a standard URL as a download link. Go to the search bar in your browser and copy the part of the URL **AFTER** :`https://www.youtube.com/watch?v=` This also applies for making a list file and for downloading from a Playlist `https://www.youtube.com/playlist?list=`
 
 
 
@@ -21,12 +21,15 @@ The app does not take a standard URL as a download link. Go to the search bar in
 -d = Debug mode (Adds extra console output to view what the Code is doing)
 -l = List Download (If you have a list of URLs to download)
 -f = Download Audio without FFMPEG (Only available in conjunction with -a and will create massive mp3 files)
+-p = Download from Playlist (https://www.youtube.com/playlist?list=XXXXXXX)
   
  
 
 Combined Flag output examples:
 -a & -l = Take the list and download audio
 -v & -l = Take the list and download video
+-a & -p = Take the playlist and download audio
+-v & -p = Take the playlist and download video
 -a = Audio only from Argument
 -v = Video only from Argument
 ```
@@ -36,7 +39,7 @@ Get the URLs from the videos you want but only the parts after `https://www.yout
 ```
 jvipPYFebWc,4MCjU-Du3eI,RrutzRWXkKs
 ```
-
+##### Warning: High CPU and Network Usage when downloading large lists or playlists as Audio (20+ URL's)
 
 The JavaScript file *app.js* checks if two folders exist if not it creates them when you first run the file: *./music* and *./video* . The music folder stores the audio file and the Video folder stores the mp4 file. 
 This app was a 20 minute bodge because all the other version looked unsafe or dodgey. Feel free to use this even though its buggy and dont be afraid to mess on with it. Im working to make it a more inclusive app with the ability to download entire playlists at a time.
