@@ -222,3 +222,7 @@ ytlist(URL, 'url').then(res => {
     });
 });
 }
+
+if(argv['t']){
+    console.log('PASS')
+}
