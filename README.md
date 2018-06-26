@@ -12,8 +12,10 @@ The app does not take a standard URL as a download link. Go to the search bar in
 
 #### Warning: High CPU and Network Usage when downloading large lists or playlists as Audio (20+ URL's)
 
-##### Example input:
-```$ node index.js list.txt -l -a = Download to audio files from the list```
+##### Example inputs:
+```$ node app.js list.txt -l -a ``` = Download to audio files from a list
+```$ node app.js dQw4w9WgXcQ -v ``` = Download 1 Video directly to MP4
+```$ node app.js PLFgquLnL59amEA53mO3KiIJRSNAzO-PRZ -a -p``` = Download to Audio directly from a Youtube Playlist
 ###
 ##### List of available Flags
 ```
@@ -47,12 +49,11 @@ This app was a 20 minute bodge because all the other version looked unsafe or do
 
 
 #### Setup:
+You need Node 8.11.3 or Greater and FFMPEG installed with FFMPEG also being added to the PATH Variable
 Upon installing / download to zip. in the Directory that the app.js / package.json file is in run:
-
 ```
 npm install
 ```
-
 then you are sorted, there might be some errors please open an issue if you get one.
 This app is not generally user friendly and you will need some NodeJS experience.
 This App requires you to have FFMPEG.exe installed and also to be in your PATH Variable. If ffmpeg is installed but not in the path variable you can uncomment two lines of code to fix this:
