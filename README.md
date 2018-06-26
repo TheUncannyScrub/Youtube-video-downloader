@@ -14,7 +14,9 @@ The app does not take a standard URL as a download link. Go to the search bar in
 
 ##### Example inputs:
 ```$ node app.js list.txt -l -a ``` = Download to audio files from a list
+
 ```$ node app.js dQw4w9WgXcQ -v ``` = Download 1 Video directly to MP4
+
 ```$ node app.js PLFgquLnL59amEA53mO3KiIJRSNAzO-PRZ -a -p``` = Download to Audio directly from a Youtube Playlist
 ###
 ##### List of available Flags
