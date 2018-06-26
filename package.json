@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node app.js -t"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +15,6 @@
     "minimist": "^1.2.0",
     "youtube-playlist": "^1.0.0",
     "ytdl-core": "^0.20.4"
-  }
+  },
+  "devDependencies": {}
 }
